@@ -1,15 +1,2 @@
 [
-    {
-        "company_name": "ABC Technologies",
-        "role": "GenAI Developer",
-        "required_skills": [
-            "Python",
-            "FastAPI",
-            "LangChain",
-            "RAG",
-            "Docker"
-        ],
-        "minimum_experience": 0,
-        "communication_score": 8
-    }
 ]
