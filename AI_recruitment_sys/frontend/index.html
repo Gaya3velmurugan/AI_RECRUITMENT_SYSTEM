@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TalentDesk</title>
+<style>
+:root{color-scheme:light;--bg:#f3f5f9;--sf:#fff;--ink:#1f2937;--mut:#6b7280;--ln:#e3e7ed;--pine:#1e293b;--p2:#2f6bd8;--mint:#eaf1fd;--amb:#f59e0b;--ok:#16a34a;--bad:#dc2626}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 "Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+h1,h2,h3{margin:0;font-weight:600}button,input,select{font:inherit;color:inherit}:focus-visible{outline:2px solid #6c9bf0;outline-offset:2px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+aside{background:var(--pine);color:#cbd5e1;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:10px;height:56px;padding:0 18px;color:#fff;font-size:1.1rem;font-weight:600;border-bottom:1px solid #334155}
+.logo{width:28px;height:28px;border-radius:6px;background:var(--p2);display:grid;place-items:center;font-weight:700}
+.nav{padding:12px 10px}.nav small{display:block;color:#94a3b8;font-size:.75rem;margin:4px 10px 8px}
+.nav button{display:flex;gap:12px;width:100%;align-items:center;background:none;border:0;color:inherit;padding:9px 12px;border-radius:6px;cursor:pointer;margin-bottom:2px;text-align:left}
+.nav button:hover{background:#2b3a52}.nav button[aria-current=page]{background:var(--p2);color:#fff}
+svg{fill:currentColor}.nav svg,.ic svg{width:18px;height:18px}
+.fine{font-size:.78rem;color:#94a3b8;margin:auto 14px 10px}.rs{margin:0 14px;background:none;border:1px solid #475569;color:#cbd5e1;border-radius:6px;padding:6px;cursor:pointer}
+.mc{min-width:0}.top{height:56px;background:#fff;border-bottom:1px solid var(--ln);display:flex;align-items:center;gap:16px;padding:0 24px;position:sticky;top:0;z-index:5}
+.crumb{color:var(--mut);white-space:nowrap}.crumb b{color:var(--ink)}
+.sb{flex:1;max-width:380px;margin-left:auto;position:relative}.sb svg{position:absolute;left:10px;top:9px;width:16px;height:16px;color:#9ca3af}.sb input{width:100%;padding:7px 10px 7px 32px;border:1px solid var(--ln);border-radius:6px;background:#f9fafb}
+.ib{background:none;border:0;cursor:pointer;color:var(--mut);padding:6px;border-radius:6px}.ib:hover{background:#f3f4f6}.ib svg{width:20px;height:20px;display:block}
+.me{display:flex;align-items:center;gap:8px;white-space:nowrap}.me em{font-style:normal}
+main{padding:22px 24px 60px}
+@media(max-width:860px){.app{grid-template-columns:1fr}aside{position:static;height:auto}.nav{display:flex;overflow-x:auto;gap:4px;padding:8px}.nav small,.fine,.rs{display:none}.nav button{width:auto;white-space:nowrap}main{padding:16px 12px 50px}.top{padding:0 12px}.crumb,.me em{display:none}}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}.ph h2{font-size:1.3rem}.ph p{margin:2px 0 0;color:var(--mut)}
+.kp{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:16px}
+.k,.box{background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:16px 18px}
+.k{display:flex;gap:14px;align-items:center;cursor:pointer}.k:hover{border-color:#b8cdf5}.k b{display:block;font-size:1.6rem;line-height:1.1;font-weight:600}.k div span{color:var(--mut);font-size:.85rem}
+.ic{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;color:var(--c);background:color-mix(in srgb,var(--c) 14%,#fff);flex:none}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}@media(max-width:1000px){.g2{grid-template-columns:1fr}}
+.box h3{font-size:.98rem;margin-bottom:12px}.mut{color:var(--mut);font-size:.88rem}
+.dn{display:flex;gap:22px;align-items:center;flex-wrap:wrap}.lg{display:grid;gap:4px;flex:1;min-width:150px}
+.lg button{display:flex;gap:8px;align-items:center;background:none;border:0;cursor:pointer;padding:4px 6px;border-radius:6px;text-align:left}.lg button:hover{background:var(--mint)}.lg i{width:10px;height:10px;border-radius:2px;background:var(--c)}.lg b{margin-left:auto}
+.br{display:grid;grid-template-columns:96px 1fr 30px;gap:10px;align-items:center;width:calc(100% + 12px);margin:0 -6px;padding:5px 6px;border:0;border-radius:6px;background:none;cursor:pointer;text-align:left}.br:hover{background:var(--mint)}
+.tr{height:8px;background:#e8ecf2;border-radius:4px;overflow:hidden}.tr i{display:block;height:100%;border-radius:4px;background:var(--c,var(--p2))}
+.br2{display:grid;grid-template-columns:120px 1fr 30px;gap:10px;align-items:center;margin:6px 0}
+.tb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}.in{padding:7px 10px;border:1px solid #d1d5db;border-radius:6px;background:#fff}
+.btn{background:var(--p2);color:#fff;border:1px solid var(--p2);border-radius:6px;padding:7px 14px;font-weight:600;cursor:pointer}.btn:hover{background:#2558b3}.btn.alt{background:#fff;color:var(--p2)}.btn.alt:hover{background:var(--mint)}.btn:disabled{opacity:.55;cursor:wait}
+.bulk{background:var(--mint);border:1px solid #c9dcf8;border-radius:6px;padding:8px 12px;display:flex;gap:10px;align-items:center;margin-bottom:12px}
+.tw{background:#fff;border:1px solid var(--ln);border-radius:8px;overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:780px}.box .tbl{min-width:0}
+.tbl th{text-align:left;font-weight:600;color:var(--mut);font-size:.82rem;padding:10px 14px;background:#f9fafb;border-bottom:1px solid var(--ln);white-space:nowrap}
+.tbl td{padding:10px 14px;border-bottom:1px solid #eef0f3;vertical-align:middle}.tbl tr:last-child td{border-bottom:0}
+.tbl tr.cl{cursor:pointer}.tbl tbody tr:hover{background:#f6f9ff}.nm{display:flex;gap:10px;align-items:center}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.av{border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;flex:none}
+.pill{font-size:.78rem;font-weight:600;padding:2px 10px;border-radius:4px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,#fff);white-space:nowrap}
+.star{background:none;border:0;font-size:1.25rem;cursor:pointer;color:#c3cad4}.star.on{color:var(--amb)}
+.tg{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0 0;padding:0;list-style:none}.tg li{background:#eef1f6;border-radius:4px;padding:1px 8px;font-size:.8rem}.tg li.hit{background:#dcf3e4;color:#15603a;font-weight:600}
+.kb{display:grid;grid-template-columns:repeat(6,minmax(190px,1fr));gap:12px;overflow-x:auto;padding-bottom:8px}
+.col{background:#e9edf3;border-radius:8px;padding:10px;min-height:280px}.col.over{outline:2px dashed var(--p2)}.col h3{font-size:.92rem;display:flex;justify-content:space-between;margin:2px 4px 10px}
+.kc{background:#fff;border:1px solid var(--ln);border-radius:6px;padding:10px;margin-bottom:8px;cursor:grab}
+.sh{position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:19}
+.dw{position:fixed;inset:0 0 0 auto;width:min(450px,100%);background:#fff;padding:22px;overflow:auto;z-index:20;box-shadow:-8px 0 30px rgba(0,0,0,.2)}
+.dw h3{margin:16px 0 6px;font-size:.95rem}.x{background:none;border:0;font-size:1.6rem;cursor:pointer;line-height:1}
+.ts{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#111827;color:#fff;padding:9px 18px;border-radius:6px;z-index:30}
+.jl{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}@media(max-width:1000px){.jl{grid-template-columns:1fr}}
+.rk{background:var(--sf);border:1px solid var(--ln);border-left:4px solid var(--p2);border-radius:8px;padding:14px 16px;margin-bottom:12px}
+.rn{width:28px;height:28px;border-radius:50%;background:var(--p2);color:#fff;display:grid;place-items:center;font-weight:600;flex:none}
+.sc{text-align:right}.sc b{display:block;font-size:1.4rem;line-height:1;color:var(--ok)}.sc span{font-size:.75rem;color:var(--mut)}
+.why{list-style:none;margin:8px 0 0;padding:0;font-size:.9rem}.why li::before{content:"\2713\00a0";color:var(--ok);font-weight:700}.why li.no::before{content:"\2715\00a0";color:var(--bad)}
+.note{padding:10px 12px;border-radius:6px;margin-top:12px;font-size:.92rem}.note.info{background:var(--mint)}.note.warn{background:#fef3c7;color:#78510a}.note.bad{background:#fee2e2;color:#8a1f14}
+.drop{border:2px dashed #cbd5e1;border-radius:8px;padding:34px 16px;text-align:center;background:#fafbfc;cursor:pointer}.drop.over{border-color:var(--p2);background:var(--mint)}
+.sp{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.sp span{padding:3px 12px;border-radius:4px;background:#e8ecf2;font-size:.85rem}.sp .on{background:#fde68a;font-weight:600}.sp .ok{background:var(--p2);color:#fff}.sp .bad{background:var(--bad);color:#fff}
+textarea{font:inherit;color:inherit}
+.md{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(580px,94%);max-height:90vh;overflow:auto;background:#fff;border-radius:8px;padding:22px;z-index:21;box-shadow:0 10px 40px rgba(0,0,0,.25)}
+.fm{display:grid;gap:12px}.fm label{display:grid;gap:4px;font-weight:600;font-size:.85rem}.fm .in,textarea.in{width:100%}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tl{list-style:none;margin:0;padding:0 0 0 16px;border-left:2px solid var(--ln)}.tl li{margin:0 0 10px;position:relative}.tl li::before{content:"";position:absolute;left:-23px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--c,var(--p2))}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}.cal b{font-size:.75rem;color:var(--mut)}.cal button{aspect-ratio:1;border:0;background:#f3f6fa;border-radius:6px;cursor:pointer;position:relative}
+.cal button.has::after{content:"";position:absolute;bottom:4px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--p2)}.cal button.sel{background:var(--p2);color:#fff}.cal button.sel::after{background:#fff}.cal button.today{outline:1px solid var(--p2)}
+@media print{aside,.top,.ph .btn,.ts{display:none}.app{display:block}main{padding:0}}
+[hidden]{display:none!important}
+</style></head><body>
+<div class="app"><aside><div class="brand"><span class="logo">T</span>TalentDesk</div><nav class="nav" id="nav"></nav>
+<p class="fine">Resumes you upload are saved on the server. Stages, notes and interviews are saved in this browser.</p><button class="rs" id="reset">Clear dashboard data</button></aside>
+<div class="mc"><header class="top"><div class="crumb" id="crumb"></div><div class="sb"><span id="si"></span><input id="gs" type="search" placeholder="Search candidates or skills" aria-label="Search candidates"></div>
+<button class="ib" id="bell" type="button" aria-label="Notifications"><span id="bi"></span></button><div class="me"><span class="av" style="width:32px;height:32px;background:#2f6bd8;font-size:.8rem">HR</span><em>HR Admin</em></div></header>
+<main id="main"></main></div></div>
+<div id="layer"></div><div class="ts" id="ts" hidden></div>
+<script>
+const $=id=>document.getElementById(id);
+function h(t,a,...k){const e=document.createElement(t);for(const[x,v]of Object.entries(a||{}))x==='class'?e.className=v:e.setAttribute(x,v);for(const c of k.flat())if(c!=null)e.append(c.nodeType?c:document.createTextNode(String(c)));return e}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const ST=['Applied','Screening','Interview','Offer','Hired','Rejected'],SC={Applied:'#6b7280',Screening:'#2f6bd8',Interview:'#8b5cf6',Offer:'#f59e0b',Hired:'#16a34a',Rejected:'#dc2626'};
+const PAL=['#1f5c5c','#7c3aed','#2563eb','#c2410c','#be185d','#0f766e','#4d7c0f','#b45309'];
+let uid=Date.now();
+const jb=(t,s,x,c)=>({id:++uid,title:t,skills:s.split(',').map(z=>z.trim()).filter(Boolean),exp:x,comm:c,dept:'General',loc:'Remote',type:'Full-time',status:'Open',desc:'',posted:Date.now()});
+let S;try{S=JSON.parse(localStorage.getItem('talentdesk')||'null')}catch{}if(!S||!S.c)S={c:[],j:[]};
+const WFD={Applied:['Review resume','Check required skills'],Screening:['Phone screen','Verify experience','Check communication'],Interview:['Schedule interview','Share interview kit','Collect feedback'],Offer:['Prepare offer letter','Get salary approval','Send offer'],Hired:['Background check','Send onboarding details'],Rejected:['Send rejection email']};
+(function(){const D=864e5,now=Date.now();
+ if(!S.v){S.v=2;const gone=new Set(S.c.filter(c=>c.src==='demo').map(c=>c.id)),SJ={'AI Engineer':'Python,LLM,RAG,FAISS','Backend Developer':'Python,FastAPI,Docker,SQL','Frontend Developer':'React,JavaScript,CSS','Data Analyst':'SQL,Python,Power BI'};
+ S.c=S.c.filter(c=>c.src!=='demo');if(S.iv)S.iv=S.iv.filter(i=>!gone.has(i.cid));S.j=S.j.filter(j=>SJ[j.title]!==(j.skills||[]).join(','))}
+ S.j.forEach(j=>{j.status=j.status||'Open';j.type=j.type||'Full-time';j.desc=j.desc||'';j.posted=j.posted||now-7*D;j.dept=j.dept||'General';j.loc=j.loc||'Remote'});
+ S.c.forEach(c=>{c.hist=c.hist||[{s:'Applied',t:now-5*D}].concat(c.stage==='Applied'?[]:[{s:c.stage,t:now-2*D}]);c.notes=c.notes||'';c.done=c.done||{}});
+ S.wf=S.wf||JSON.parse(JSON.stringify(WFD));S.wf.Rejected=S.wf.Rejected||WFD.Rejected;S.auto=S.auto||{sched:true,hire:true,nohire:true};
+ if(!S.iv)S.iv=[]})();
+const save=()=>{try{localStorage.setItem('talentdesk',JSON.stringify(S))}catch{}};
+const has=(cs,r)=>cs.some(s=>s===r||(r.length>2&&(s.includes(r)||r.includes(s))));
+const fmt=v=>typeof v==='number'?(v<=1?Math.round(v*100):Math.round(v))+'%':v;
+function match(c,j){const cs=c.skills.map(s=>s.toLowerCase()),hit=j.skills.filter(r=>has(cs,r.toLowerCase())),cov=j.skills.length?hit.length/j.skills.length:1,e=j.exp?Math.min(1,c.experience/j.exp):1,m=j.comm?Math.min(1,c.communication/j.comm):1;
+  return{score:Math.round((cov*.6+e*.2+m*.2)*100),hit,miss:j.skills.filter(r=>!hit.includes(r)),e:c.experience>=j.exp,m:c.communication>=j.comm}}
+const best=j=>S.c.map(c=>({c,m:match(c,j)})).sort((a,b)=>b.m.score-a.m.score)[0];
+const norm=c=>({id:++uid,name:c.name||'Unnamed',email:c.email||'',phone:c.phone||'',skills:Array.isArray(c.skills)?c.skills.map(String):[],experience:+c.experience||0,projects:Array.isArray(c.projects)?c.projects:[],communication:+c.communication||0,coding:+c.coding||0,problem_solving:+c.problem_solving||0,leadership:+c.leadership||0,stage:'Applied',star:false,src:'live',hist:[{s:'Applied',t:Date.now()}],notes:'',done:{}});
+async function call(p,o){let r;try{r=await fetch(p,o)}catch{throw new Error('Can’t reach the server. Check that the uvicorn window is still running.')}const t=await r.text();let d;try{d=JSON.parse(t)}catch{d=t}
+  if(!r.ok)throw new Error(d&&typeof d.detail==='string'?d.detail:'The server returned an error ('+r.status+').');return d}
+const findList=d=>{if(Array.isArray(d))return d;if(d&&typeof d==='object')for(const v of Object.values(d))if(Array.isArray(v)&&v.length&&typeof v[0]==='object')return v;return null};
+let tt;function toast(m){const t=$('ts');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,2200)}
+/* small pieces */
+function av(c,s){s=s||42;const p=(c.name||'?').split(' ').filter(Boolean);return h('span',{class:'av',style:`width:${s}px;height:${s}px;font-size:${s*.38}px;background:${PAL[[...c.name].reduce((a,x)=>a+x.charCodeAt(0),0)%PAL.length]}`},(p[0]?p[0][0]:'')+(p[1]?p[1][0]:''))}
+const pill=s=>h('span',{class:'pill',style:'--c:'+SC[s]},s);
+const head=(t,s,...a)=>h('div',{class:'ph'},h('div',{},h('h2',{},t),h('p',{},s)),h('div',{style:'display:flex;gap:8px;flex-wrap:wrap'},a));
+const tags=(c,req)=>{const rq=(req||[]).map(x=>x.toLowerCase()),s=[...c.skills].sort((a,b)=>has(rq,b.toLowerCase())-has(rq,a.toLowerCase()));return h('ul',{class:'tg'},s.slice(0,5).map(x=>h('li',has(rq,x.toLowerCase())?{class:'hit'}:{},x)),s.length>5?h('li',{},'+'+(s.length-5)):null)};
+function star(c){const b=h('button',{class:'star'+(c.star?' on':''),type:'button','aria-label':'Shortlist star'},c.star?'\u2605':'\u2606');b.onclick=e=>{e.stopPropagation();c.star=!c.star;save();b.className='star'+(c.star?' on':'');b.textContent=c.star?'\u2605':'\u2606'};return b}
+const bar=(l,v)=>h('div',{class:'br2'},h('span',{},l),h('div',{class:'tr'},h('i',{style:'width:'+Math.min(100,v)+'%'})),h('b',{},v));
+function setStage(c,s){c.stage=s;hist(c,s);save();toast(c.name+' moved to '+s);render()}
+/* profile drawer */
+function close(){$('layer').replaceChildren()}
+function open(id){const c=S.c.find(x=>x.id===id);if(!c)return;const sh=h('div',{class:'sh'});sh.onclick=close;
+  const sel=h('select',{class:'in','aria-label':'Stage'},ST.map(s=>h('option',s===c.stage?{value:s,selected:''}:{value:s},s)));sel.onchange=()=>{setStage(c,sel.value);open(id)};
+  const x=h('button',{class:'x',type:'button','aria-label':'Close'},'\u00d7');x.onclick=close;
+  const d=h('div',{class:'dw',role:'dialog','aria-label':c.name},
+    h('div',{class:'row'},h('div',{class:'row'},av(c,52),h('div',{},h('h2',{style:'font-size:1.25rem'},c.name),h('div',{class:'mut'},c.experience+' yr experience, '+(c.src==='demo'?'sample candidate':'live resume')))),x),
+    h('div',{class:'mut',style:'margin-top:10px'},[c.email,c.phone].filter(Boolean).join('   ')),
+    h('div',{class:'row',style:'margin-top:12px;justify-content:flex-start'},sel,star(c),h('span',{class:'mut'},'Shortlist')),
+    h('h3',{},'Skill scores (AI estimates)'),bar('Coding',c.coding),bar('Communication',c.communication),bar('Problem solving',c.problem_solving),bar('Leadership',c.leadership),
+    h('h3',{},'Skills'),tags({skills:c.skills,name:''},[]),
+    c.projects.length?[h('h3',{},'Projects'),h('ul',{},c.projects.map(p=>h('li',{},p)))]:null,
+    h('h3',{},'Fit for open positions'),...S.j.map(j=>{const m=match(c,j);return bar(j.title,m.score)}),...more(c,id));
+  $('layer').replaceChildren(sh,d)}
+document.onkeydown=e=>{if(e.key==='Escape')close()};
+/* views */
+const IC={dash:'M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z',cands:'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',pipe:'M4 4h4v16H4zM10 4h4v10h-4zM16 4h4v13h-4z',jobs:'M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z',add:'M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z',srch:'M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z',bell:'M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z',cal:'M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z',chk:'M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z',rep:'M5 9.2h3V19H5zM10.6 5h2.8v14h-2.8zm5.6 8H19v6h-2.8z',wf:'M4 4h6v6H4zm10 0h6v6h-6zM9 14h6v6H9z'};IC.posts=IC.jobs;
+const ic=k=>{const s=h('span',{style:'display:inline-flex'});s.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+IC[k]+'"/></svg>';return s};
+function donut(){const v=ST.map(s=>S.c.filter(c=>c.stage===s).length),t=v.reduce((a,b)=>a+b,0)||1;let o=25,r='<circle cx="18" cy="18" r="15.9" fill="none" stroke="#e5e7eb" stroke-width="4"/>';
+  v.forEach((n,i)=>{const p=n/t*100;if(p)r+=`<circle cx="18" cy="18" r="15.9" fill="none" stroke="${SC[ST[i]]}" stroke-width="4" stroke-dasharray="${p} ${100-p}" stroke-dashoffset="${o}"/>`;o-=p});
+  const d=h('span');d.innerHTML=`<svg viewBox="0 0 36 36" width="160" height="160" role="img" aria-label="Candidates by stage">${r}<text x="18" y="19" text-anchor="middle" font-size="7" font-weight="600" fill="#1f2937">${S.c.length}</text><text x="18" y="24" text-anchor="middle" font-size="2.6" fill="#6b7280">candidates</text></svg>`;return d}
+function dash(){const c=S.c,n=s=>c.filter(x=>x.stage===s).length;
+  const K=(i,col,a,l,v)=>{const e=h('div',{class:'k',style:'--c:'+col,tabindex:'0',role:'link'},h('span',{class:'ic'},ic(i)),h('div',{},h('b',{},a),h('span',{},l)));e.onclick=()=>go(v);e.onkeydown=ev=>{if(ev.key==='Enter')go(v)};return e};
+  const kp=h('div',{class:'kp'},K('cands','#2f6bd8',c.length,'Total candidates','cands'),K('jobs','#8b5cf6',S.j.filter(j=>j.status==='Open').length,'Open positions','posts'),K('cal','#f59e0b',n('Interview'),'Interviews in progress','pipe'),K('chk','#16a34a',n('Offer')+n('Hired'),'Offers and hires','pipe'));
+  const lg=h('div',{class:'lg'},ST.map(s=>{const b=h('button',{type:'button',style:'--c:'+SC[s]},h('i',{}),s,h('b',{},n(s)));b.onclick=()=>go('pipe');return b}));
+  const st=h('div',{class:'box'},h('h3',{},'Candidates by stage'),h('div',{class:'dn'},donut(),lg));
+  const t={};c.forEach(x=>x.skills.forEach(s=>t[s]=(t[s]||0)+1));const top=Object.entries(t).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  const sk=h('div',{class:'box'},h('h3',{},'Top skills in the pool'),top.map(([s,k])=>{const b=h('button',{class:'br',type:'button'},h('span',{},s),h('div',{class:'tr'},h('i',{style:'width:'+k/top[0][1]*100+'%'})),h('b',{},k));b.onclick=()=>{F.skill=s;F.q='';F.st='';go('cands')};return b}));
+  const tab=(hd,rows)=>h('table',{class:'tbl'},h('thead',{},h('tr',{},hd.map(x=>h('th',{},x)))),h('tbody',{},rows));
+  const rt=h('div',{class:'box'},h('h3',{},'Recent candidates'),tab(['Name','Experience','Stage'],c.slice(-5).reverse().map(x=>{const r=h('tr',{class:'cl'},h('td',{},h('div',{class:'nm'},av(x,28),x.name)),h('td',{},x.experience+' yr'),h('td',{},pill(x.stage)));r.onclick=()=>open(x.id);return r})));
+  const pt=h('div',{class:'box'},h('h3',{},'Open positions'),tab(['Position','Required skills','Best match'],S.j.map(j=>{const b=best(j);const r=h('tr',{class:'cl'},h('td',{},h('b',{},j.title)),h('td',{},j.skills.join(', ')),h('td',{},b?b.c.name+' ('+b.m.score+'%)':''));r.onclick=()=>{selJob=j.id;rank=null;go('jobs')};return r})));
+  const ab=h('button',{class:'btn',type:'button'},'+ Upload resume');ab.onclick=()=>go('add');
+  return h('div',{},head('Dashboard','Welcome back. Here is an overview of your hiring activity.',ab),S.c.length?null:h('div',{class:'box',style:'margin-bottom:16px'},h('b',{},'Get started'),h('div',{class:'mut'},'1. Create a position under Job Postings. 2. Add resumes under Upload Resume. 3. Shortlist, match, schedule interviews and track every candidate from here.')),kp,h('div',{class:'g2'},st,sk),h('div',{class:'g2'},rt,pt),h('div',{class:'g2'},upBox(),qaBox()))}
+let F={q:'',st:'',sort:'name',star:false,skill:''},SEL=new Set();
+function cands(){const tb=h('tbody'),cnt=h('span',{class:'mut'}),bulk=h('div',{class:'bulk',hidden:''}),all=h('input',{type:'checkbox','aria-label':'Select all'}),bn=h('b',{});let cur=[];
+  const upd=()=>{bulk.hidden=!SEL.size;bn.textContent=SEL.size+' selected';all.checked=cur.length>0&&cur.every(c=>SEL.has(c.id))};
+  const row=c=>{const cb=h('input',{type:'checkbox','aria-label':'Select '+c.name});cb.checked=SEL.has(c.id);cb.onclick=e=>{e.stopPropagation();cb.checked?SEL.add(c.id):SEL.delete(c.id);upd()};
+    const r=h('tr',{class:'cl'},h('td',{},cb),h('td',{},h('div',{class:'nm'},av(c,34),h('div',{},h('b',{},c.name),h('div',{class:'mut'},c.email||'No email')))),
+      h('td',{},c.skills.slice(0,3).join(', ')+(c.skills.length>3?' +'+(c.skills.length-3):'')),h('td',{},c.experience+' yr'),h('td',{},c.coding),h('td',{},c.communication),h('td',{},pill(c.stage)),h('td',{},star(c)));r.onclick=()=>open(c.id);return r};
+  const fill=()=>{const q=F.q.toLowerCase();cur=S.c.filter(c=>(!q||(c.name+' '+c.skills.join(' ')).toLowerCase().includes(q))&&(!F.st||c.stage===F.st)&&(!F.star||c.star)&&(!F.skill||c.skills.some(s=>s.toLowerCase()===F.skill.toLowerCase())));
+    cur.sort((a,b)=>F.sort==='name'?a.name.localeCompare(b.name):b[F.sort]-a[F.sort]);cnt.textContent='Showing '+cur.length+' of '+S.c.length+' candidates';
+    tb.replaceChildren(...(cur.length?cur.map(row):[h('tr',{},h('td',{colspan:'8',style:'text-align:center;color:var(--mut);padding:30px'},(S.c.length?'No candidates match these filters.':'No candidates yet. Use Upload Resume to add the first one.')))]));upd()};
+  all.onchange=()=>{cur.forEach(c=>all.checked?SEL.add(c.id):SEL.delete(c.id));fill()};
+  const mv=h('select',{class:'in','aria-label':'Move selected to stage'},h('option',{value:''},'Move selected to...'),ST.map(s=>h('option',{value:s},s)));
+  mv.onchange=()=>{if(!mv.value)return;const k=SEL.size;S.c.filter(c=>SEL.has(c.id)).forEach(c=>{c.stage=mv.value;hist(c,mv.value)});save();toast(k+' candidates moved to '+mv.value);SEL.clear();render()};
+  const cl=h('button',{class:'btn alt',type:'button'},'Clear selection');cl.onclick=()=>{SEL.clear();fill()};bulk.append(bn,mv,cl);
+  const q=h('input',{class:'in',type:'search',placeholder:'Filter by name or skill','aria-label':'Filter',value:F.q});q.oninput=e=>{F.q=e.target.value;fill()};
+  const st=h('select',{class:'in','aria-label':'Stage'},h('option',{value:''},'All stages'),ST.map(s=>h('option',s===F.st?{value:s,selected:''}:{value:s},s)));st.onchange=e=>{F.st=e.target.value;fill()};
+  const so=h('select',{class:'in','aria-label':'Sort'},[['name','Name (A to Z)'],['experience','Most experience'],['coding','Highest coding'],['communication','Best communication']].map(([v,l])=>h('option',v===F.sort?{value:v,selected:''}:{value:v},l)));so.onchange=e=>{F.sort=e.target.value;fill()};
+  const sb=h('button',{class:'btn alt',type:'button'},F.star?'Showing shortlisted':'Shortlisted only');sb.onclick=()=>{F.star=!F.star;sb.textContent=F.star?'Showing shortlisted':'Shortlisted only';fill()};
+  const sk=F.skill?h('button',{class:'btn alt',type:'button'},'Skill: '+F.skill+'  \u00d7'):null;if(sk)sk.onclick=()=>{F.skill='';render()};
+  const ab=h('button',{class:'btn',type:'button'},'+ Upload resume');ab.onclick=()=>go('add');
+  const tw=h('div',{class:'tw'},h('table',{class:'tbl'},h('thead',{},h('tr',{},h('th',{style:'width:36px'},all),['Candidate','Key skills','Experience','Coding','Communication','Stage','Shortlist'].map(x=>h('th',{},x)))),tb));
+  const sy=h('button',{class:'btn alt',type:'button'},'Import saved resumes');sy.onclick=()=>syncSrv(sy);fill();return h('div',{},head('Candidates','All candidates in your talent pool.',sy,ab),h('div',{class:'tb'},q,st,so,sb,sk,cnt),bulk,tw)}
+function pipe(){const kb=h('div',{class:'kb'},ST.map(s=>{const col=h('div',{class:'col'}),it=S.c.filter(c=>c.stage===s);
+  col.append(h('h3',{style:'color:'+SC[s]},s,h('span',{},it.length)),...it.map(c=>{const k=h('div',{class:'kc',draggable:'true',tabindex:'0'},h('div',{class:'row',style:'justify-content:flex-start'},av(c,28),h('b',{},c.name)),h('div',{class:'mut',style:'margin-top:4px'},c.skills.slice(0,3).join(', ')));
+    k.ondragstart=e=>e.dataTransfer.setData('text/plain',c.id);k.onclick=()=>open(c.id);k.onkeydown=e=>{if(e.key==='Enter')open(c.id)};return k}));
+  col.ondragover=e=>{e.preventDefault();col.classList.add('over')};col.ondragleave=()=>col.classList.remove('over');
+  col.ondrop=e=>{e.preventDefault();const c=S.c.find(x=>x.id==e.dataTransfer.getData('text/plain'));if(c)setStage(c,s)};return col}));
+  return h('div',{},head('Pipeline','Drag a candidate to a new stage, or select a card to open the profile.'),kb)}
+let selJob=null,rank=null;
+function showRank(box,list,j,srv){box.replaceChildren(...list.map((r,i)=>{const m=r.m,c=r.c,why=[];
+  why.push(h('li',m.miss.length?{class:'no'}:{},'Has '+m.hit.length+' of '+j.skills.length+' required skills'+(m.hit.length?': '+m.hit.join(', '):'')));
+  if(m.miss.length)why.push(h('li',{class:'no'},'Missing: '+m.miss.join(', ')));
+  why.push(h('li',m.e?{}:{class:'no'},c.experience+' yr experience, needs '+j.exp));why.push(h('li',m.m?{}:{class:'no'},'Communication '+c.communication+', needs '+j.comm));
+  const mv=c.stage==='Applied'?h('button',{class:'btn',type:'button'},'Move to Screening'):h('span',{class:'mut'},'Stage: '+c.stage);if(c.stage==='Applied')mv.onclick=()=>{setStage(c,'Screening')};
+  const pf=h('button',{class:'btn alt',type:'button'},'Open profile');pf.onclick=()=>open(c.id);
+  return h('article',{class:'rk'},h('div',{class:'row'},h('div',{class:'row'},h('span',{class:'rn'},i+1),av(c,36),h('div',{},h('b',{},c.name),h('div',{class:'mut'},c.email))),
+    h('div',{class:'sc'},h('b',{},r.srv!=null?fmt(r.srv):m.score+'%'),h('span',{},r.srv!=null?'AI match score':'skill match'))),
+    h('div',{class:'tr',style:'margin-top:10px'},h('i',{style:'width:'+m.score+'%'})),h('ul',{class:'why'},why),tags(c,j.skills),h('div',{class:'row',style:'margin-top:12px;justify-content:flex-start'},mv,pf))}))}
+function jobs(){if(!S.j.length){const b=h('button',{class:'btn',type:'button'},'+ New job posting');b.onclick=()=>jobForm();return h('div',{},head('Match candidates','Pick a position, then see who fits best and why.'),h('div',{class:'box'},h('p',{style:'margin-top:0'},'There are no job postings yet. Create a position first, then rank your candidates against it.'),b))}const j=S.j.find(x=>x.id===selJob)||S.j[0];selJob=j.id;const out=h('div',{}),msg=h('div',{class:'note info',hidden:''});
+  const note=(k,t)=>{msg.className='note '+k;msg.textContent=t;msg.hidden=!t};
+  const list=h('div',{class:'box'},h('h3',{},'Open positions'),S.j.map(x=>{const b=h('button',{class:'br',type:'button',style:'grid-template-columns:1fr auto'+(x.id===j.id?';background:var(--mint)':'')},h('b',{},x.title),h('span',{class:'mut'},x.skills.length+' skills'));b.onclick=()=>{selJob=x.id;rank=null;render()};return b}));
+  const t=h('input',{class:'in',placeholder:'Job title'}),s=h('input',{class:'in',placeholder:'Skills, comma separated'}),y=h('input',{class:'in',type:'number',min:'0',value:'1','aria-label':'Minimum years'});
+  const ad=h('button',{class:'btn alt',type:'button'},'Add position');ad.onclick=()=>{if(!t.value.trim()||!s.value.trim())return toast('Enter a title and skills');const n=jb(t.value.trim(),s.value,+y.value||0,60);S.j.push(n);selJob=n.id;rank=null;save();render()};
+  list.append(h('hr'),h('div',{style:'display:grid;gap:8px'},t,s,y,ad));
+  const lb=h('button',{class:'btn',type:'button'},'Rank my candidates'),ab=h('button',{class:'btn alt',type:'button'},'Ask the AI server');
+  lb.onclick=()=>{note('info','');rank=S.c.map(c=>({c,m:match(c,j)})).sort((a,b)=>b.m.score-a.m.score);showRank(out,rank,j)};
+  ab.onclick=async()=>{ab.disabled=true;note('info','Asking the AI server. This can take a while on this computer.');
+    try{const d=await call('/recommend',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({company_name:'Our company',role:j.title,required_skills:j.skills,minimum_experience:j.exp,communication_score:j.comm})});
+      const l=findList(d);if(!l||!l.length){note('warn','The AI server returned no candidates. Upload resumes in Add resume first.')}
+      else{rank=l.map(it=>{const c0=it.candidate||it;let c=S.c.find(x=>x.email&&c0.email&&x.email.toLowerCase()===String(c0.email).toLowerCase());if(!c){c=norm(c0);S.c.push(c)}
+        return{c,m:match(c,j),srv:it.score??it.match_score??it.final_score??it.similarity}});save();note('info','Ranked by the AI server, best first.');showRank(out,rank,j)}
+    }catch(e){note('bad',e.message)}ab.disabled=false};
+  const det=h('div',{class:'box'},h('h2',{style:'font-size:1.25rem'},j.title),h('div',{class:'mut'},'Needs '+j.exp+'+ years and communication '+j.comm+'+'),h('ul',{class:'tg'},j.skills.map(x=>h('li',{},x))),h('div',{class:'row',style:'margin-top:14px;justify-content:flex-start;flex-wrap:wrap'},lb,ab),msg);
+  if(rank)showRank(out,rank,j);else out.append(h('div',{class:'box mut',style:'margin-top:12px'},'Choose “Rank my candidates” for an instant skill-based ranking, or “Ask the AI server” to use the AI search on uploaded resumes.'));
+  return h('div',{},head('Match candidates','Pick a position, then see who fits best and why.'),h('div',{class:'jl'},list,h('div',{},det,h('div',{style:'margin-top:12px'},out))))}
+const STEPS=['Upload PDF','Read the text','Pick out details','Profile fingerprint','Save for search'];
+function add(){let file=null;const nm=h('b',{},'Drop a PDF here or select one'),inp=h('input',{type:'file',accept:'application/pdf,.pdf',hidden:''}),dr=h('div',{class:'drop',tabindex:'0'},nm,h('div',{class:'mut'},'One resume per upload')),
+  sp=h('div',{class:'sp'},STEPS.map(s=>h('span',{},s))),msg=h('div',{class:'note info',hidden:''}),res=h('div',{style:'margin-top:14px'}),up=h('button',{class:'btn',type:'button'},'Add this resume');
+  const note=(k,t)=>{msg.className='note '+k;msg.textContent=t;msg.hidden=!t},pick=f=>{if(!f)return;if(!/\.pdf$/i.test(f.name))return note('warn','Please choose a PDF file.');file=f;nm.textContent=f.name;note('info','')};
+  dr.onclick=()=>inp.click();dr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();inp.click()}};inp.onchange=e=>pick(e.target.files[0]);
+  dr.ondragover=e=>{e.preventDefault();dr.classList.add('over')};dr.ondragleave=()=>dr.classList.remove('over');dr.ondrop=e=>{e.preventDefault();dr.classList.remove('over');pick(e.dataTransfer.files[0])};
+  up.onclick=async()=>{if(!file)return note('warn','Choose a PDF first.');up.disabled=true;res.replaceChildren();const sx=[...sp.children];let cur=0;const set=i=>{cur=i;sx.forEach((x,k)=>x.className=k<i?'ok':k===i?'on':'')},t0=Date.now(),iv=setInterval(()=>note('info',STEPS[cur]+'\u2026 '+Math.round((Date.now()-t0)/1000)+' s'),400);
+    const fd=new FormData();fd.append('file',file);set(0);await sleep(300);set(1);const tm=setTimeout(()=>set(2),1500);
+    try{const d=await call('/upload_resume',{method:'POST',body:fd});clearTimeout(tm);set(3);await sleep(350);set(4);await sleep(350);sx.forEach(x=>x.className='ok');clearInterval(iv);
+      const c0=(d&&d.candidate)||d,dup=d&&typeof d.message==='string'&&/exist/i.test(d.message);let c=S.c.find(x=>x.email&&c0.email&&x.email.toLowerCase()===String(c0.email).toLowerCase());
+      if(!c){c=norm(c0);S.c.push(c);save()}note(dup?'warn':'info',dup?'This candidate was already saved.':'Done. '+c.name+' is now in your pool as a live candidate.');
+      const pf=h('button',{class:'btn alt',type:'button'},'Open profile');pf.onclick=()=>open(c.id);res.append(h('div',{class:'box'},h('div',{class:'row'},h('div',{class:'row'},av(c),h('div',{},h('b',{},c.name),h('div',{class:'mut'},c.email))),pill(c.stage)),tags(c),h('div',{style:'margin-top:12px'},pf)))
+    }catch(e){clearTimeout(tm);clearInterval(iv);sx[cur].className='bad';note('bad',e.message)}up.disabled=false};
+  return h('div',{},head('Upload resume','Each resume is read, turned into a profile and saved. It can take up to a minute on this computer.'),h('div',{class:'box'},dr,inp,h('div',{style:'margin-top:12px'},up),sp,msg),res)}
+/* ---- interviews, postings, reports, workflow ---- */
+const hist=(c,s)=>{(c.hist=c.hist||[]).push({s,t:Date.now()})};
+const dt=t=>new Date(t).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}),dd=t=>new Date(t).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+const cname=id=>(S.c.find(c=>c.id===id)||{name:'(removed)'}).name,jname=id=>(S.j.find(j=>j.id===id)||{title:'(removed)'}).title,fld=(l,e)=>h('label',{},l,e);
+const mini=(l,f,x)=>{const b=h('button',{class:'btn alt',type:'button',style:'padding:3px 9px;margin:0 6px 4px 0'+(x||'')},l);b.onclick=e=>{e.stopPropagation();f()};return b};
+function modal(title,...body){const sh=h('div',{class:'sh'});sh.onclick=close;const x=h('button',{class:'x',type:'button','aria-label':'Close'},'\u00d7');x.onclick=close;
+  $('layer').replaceChildren(sh,h('div',{class:'md',role:'dialog','aria-label':title},h('div',{class:'row',style:'margin-bottom:12px'},h('h2',{style:'font-size:1.2rem'},title),x),body))}
+/* drawer extras: screening, tasks, interviews, status history */
+function more(c,id){const re=()=>{save();open(id);render()};
+  const sh=h('button',{class:'btn',type:'button'},'Shortlist'),rj=h('button',{class:'btn alt',type:'button',style:'color:var(--bad);border-color:var(--bad)'},'Reject');
+  sh.onclick=()=>{c.star=true;if(c.stage==='Applied'){c.stage='Screening';hist(c,'Screening')}toast(c.name+' shortlisted');re()};
+  rj.onclick=()=>{c.stage='Rejected';hist(c,'Rejected');toast(c.name+' rejected');re()};
+  const nt=h('textarea',{class:'in',rows:'3',placeholder:'Screening notes for your team'});nt.value=c.notes||'';nt.onchange=()=>{c.notes=nt.value;save();toast('Notes saved')};
+  const tk=(S.wf[c.stage]||[]).map(t=>{const k=c.stage+':'+t,cb=h('input',{type:'checkbox'});cb.checked=!!c.done[k];cb.onchange=()=>{c.done[k]=cb.checked;save()};return h('label',{style:'display:flex;gap:8px;align-items:center;margin:3px 0'},cb,t)});
+  const iv=S.iv.filter(i=>i.cid===c.id);
+  return [h('h3',{},'Screening'),h('div',{class:'row',style:'justify-content:flex-start'},sh,rj),h('div',{style:'margin-top:8px'},nt),
+    h('h3',{},'Tasks for the '+c.stage+' stage'),...(tk.length?tk:[h('div',{class:'mut'},'No tasks defined.')]),
+    h('h3',{},'Interviews'),...(iv.length?iv.map(i=>h('div',{class:'mut'},dt(i.at)+', '+i.mode+', '+i.status)):[h('div',{class:'mut'},'None scheduled')]),
+    h('div',{style:'margin-top:8px'},mini('Schedule interview',()=>schedule(c.id)),mini('Interview questions',()=>kit(c.id,(iv[0]||{}).id))),
+    h('h3',{},'Application status history'),h('ul',{class:'tl'},[...c.hist].reverse().map(x=>h('li',{style:'--c:'+SC[x.s]},h('b',{},x.s),h('div',{class:'mut'},dd(x.t)))))]}
+/* schedule interview */
+function schedule(cid,iv){if(!S.j.length)return toast('Create a job posting first');const e=iv||{},cs=S.c.filter(c=>c.id===cid||(c.stage!=='Rejected'&&c.stage!=='Hired'));if(!cs.length)return toast('No candidates available');
+  const cS=h('select',{class:'in'},cs.map(c=>h('option',{value:c.id},c.name))),jS=h('select',{class:'in'},S.j.filter(j=>j.status!=='Closed'||j.id===e.jid).map(j=>h('option',{value:j.id},j.title)));
+  const d0=new Date(e.at||Date.now()+864e5),pd=n=>String(n).padStart(2,'0');
+  const dI=h('input',{class:'in',type:'date',value:d0.getFullYear()+'-'+pd(d0.getMonth()+1)+'-'+pd(d0.getDate())}),tI=h('input',{class:'in',type:'time',value:e.at?pd(d0.getHours())+':'+pd(d0.getMinutes()):'11:00'});
+  const mI=h('select',{class:'in'},['Video call','Phone','On-site'].map(m=>h('option',{value:m},m))),wI=h('input',{class:'in',placeholder:'Interviewer name',value:e.who||''});
+  if(cid)cS.value=cid;if(e.jid)jS.value=e.jid;if(e.mode)mI.value=e.mode;
+  const sv=h('button',{class:'btn',type:'button'},iv?'Save changes':'Schedule interview');
+  sv.onclick=()=>{if(!dI.value||!tI.value)return toast('Choose a date and time');const at=new Date(dI.value+'T'+tI.value).getTime(),c=S.c.find(x=>x.id==cS.value);if(!c||!jS.value)return toast('Choose a candidate and position');
+    if(iv)Object.assign(iv,{cid:c.id,jid:+jS.value,at,mode:mI.value,who:wI.value.trim()});else S.iv.push({id:++uid,cid:c.id,jid:+jS.value,at,mode:mI.value,who:wI.value.trim()||'To be assigned',status:'Scheduled'});
+    if(!iv&&S.auto.sched&&(c.stage==='Applied'||c.stage==='Screening')){c.stage='Interview';hist(c,'Interview')}
+    save();close();toast('Interview '+(iv?'updated':'scheduled')+' for '+c.name);go('iv')};
+  modal(iv?'Reschedule interview':'Schedule interview',h('div',{class:'fm'},fld('Candidate',cS),fld('Position',jS),h('div',{class:'two'},fld('Date',dI),fld('Time',tI)),fld('Interview type',mI),fld('Interviewer',wI)),h('div',{style:'margin-top:14px'},sv))}
+/* interview kit: generated questions + feedback form */
+const TPL=[s=>'Describe a project where you used '+s+'. What was your role and what did you build?',s=>'What are common mistakes or limits when working with '+s+', and how do you avoid them?',s=>'How would you debug a production problem involving '+s+'?',s=>'What would you improve in your most recent '+s+' work, and why?'];
+const BEH=['Tell us about a time you disagreed with a teammate. How did you resolve it?','Describe a deadline you almost missed. What did you do?','Why do you want this role, and what do you want to learn in it?','Tell us about feedback you received and how you acted on it.'];
+function questions(c,j,seed){const cs=c.skills.map(s=>s.toLowerCase()),have=j.skills.filter(r=>has(cs,r.toLowerCase())),miss=j.skills.filter(r=>!have.includes(r)),o=[];
+  have.slice(0,4).forEach((s,i)=>o.push(['Technical: '+s,TPL[(i+seed)%TPL.length](s)]));
+  (c.projects||[]).slice(0,2).forEach(p=>o.push(['Project: '+p,'Walk us through "'+p+'". What was the hardest part and what would you change?']));
+  miss.slice(0,2).forEach(s=>o.push(['Skill gap: '+s,'The role needs '+s+', which is not on your resume. How would you get up to speed, and have you used anything similar?']));
+  if(c.experience<j.exp)o.push(['Experience','The role asks for '+j.exp+'+ years and you have '+c.experience+'. Which of your achievements shows you can handle it?']);
+  for(let i=0;i<3;i++)o.push(['Behavioural',BEH[(i+seed)%BEH.length]]);return o}
+function kit(cid,ivId,fb){const c=S.c.find(x=>x.id===cid);if(!c)return;if(!S.j.length)return toast('Create a job posting first');const iv=S.iv.find(i=>i.id===ivId),j=S.j.find(x=>iv&&x.id===iv.jid)||S.j.map(x=>({x,m:match(c,x)})).sort((a,b)=>b.m.score-a.m.score)[0].x;let seed=0;
+  const qb=h('div'),paint=()=>qb.replaceChildren(...questions(c,j,seed).map((q,i)=>h('div',{style:'margin:0 0 12px'},h('b',{},(i+1)+'. '+q[0]),h('div',{},q[1]))));paint();
+  const rg=h('button',{class:'btn alt',type:'button'},'Generate a new set');rg.onclick=()=>{seed++;paint()};
+  const cp=h('button',{class:'btn alt',type:'button'},'Copy questions');cp.onclick=()=>{const t=questions(c,j,seed).map((q,i)=>(i+1)+'. '+q[1]).join('\n');(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('Questions copied'),()=>toast('Copy is not available here'))};
+  const R=['Technical skills','Communication','Problem solving','Culture fit'],rs=R.map(()=>h('select',{class:'in'},[5,4,3,2,1].map(n=>h('option',{value:n},n+(n===5?' (excellent)':n===1?' (poor)':''))))),rec=h('select',{class:'in'},['Strong hire','Hire','Hold','No hire'].map(x=>h('option',{value:x},x))),cm=h('textarea',{class:'in',rows:'4',placeholder:'Strengths, concerns and notes'});
+  rs.forEach(x=>x.value='3');rec.value='Hold';if(iv&&iv.fb){rs.forEach((x,i)=>x.value=iv.fb.r[i]);rec.value=iv.fb.rec;cm.value=iv.fb.note||''}
+  const sv=h('button',{class:'btn',type:'button'},'Save feedback');
+  sv.onclick=()=>{if(!iv)return toast('Schedule an interview first to record feedback');iv.fb={r:rs.map(x=>+x.value),rec:rec.value,note:cm.value.trim()};iv.status='Completed';let m='Feedback saved';
+    if((rec.value==='Hire'||rec.value==='Strong hire')&&S.auto.hire&&c.stage==='Interview'){c.stage='Offer';hist(c,'Offer');m+='. Moved to Offer'}
+    else if(rec.value==='No hire'&&S.auto.nohire&&c.stage!=='Hired'){c.stage='Rejected';hist(c,'Rejected');m+='. Marked as rejected'}save();close();toast(m);go('iv')};
+  const pq=h('div',{},h('p',{class:'mut',style:'margin-top:0'},'Built from '+c.name+'’s skills and the requirements for '+j.title+'.'),qb,h('div',{class:'row',style:'justify-content:flex-start'},rg,cp)),
+    pf=h('div',{hidden:''},h('div',{class:'fm'},R.map((r,i)=>fld(r,rs[i])),fld('Recommendation',rec),fld('Comments',cm)),h('div',{style:'margin-top:12px'},sv)),t1=h('button',{class:'btn',type:'button'},'Questions'),t2=h('button',{class:'btn alt',type:'button'},'Feedback');
+  t1.onclick=()=>{pq.hidden=false;pf.hidden=true;t1.className='btn';t2.className='btn alt'};t2.onclick=()=>{pq.hidden=true;pf.hidden=false;t2.className='btn';t1.className='btn alt'};
+  modal('Interview kit: '+c.name,h('div',{class:'row',style:'justify-content:flex-start;margin-bottom:12px'},t1,t2),pq,pf);if(fb)t2.onclick()}
+/* interviews view */
+let ivF='up',ivDay=null,calD=new Date();calD.setDate(1);
+function ivs(){const L=S.iv.filter(i=>ivDay?new Date(i.at).toDateString()===ivDay:ivF==='up'?i.status==='Scheduled':ivF==='done'?i.status==='Completed':true).sort((a,b)=>a.at-b.at);
+  const y=calD.getFullYear(),m=calD.getMonth(),cg=h('div',{class:'cal'},['S','M','T','W','T','F','S'].map(x=>h('b',{},x)));for(let i=0;i<new Date(y,m,1).getDay();i++)cg.append(h('span'));
+  for(let d=1;d<=new Date(y,m+1,0).getDate();d++){const k=new Date(y,m,d).toDateString(),hv=S.iv.some(i=>new Date(i.at).toDateString()===k&&i.status!=='Cancelled'),b=h('button',{type:'button',class:(hv?'has ':'')+(ivDay===k?'sel ':'')+(k===new Date().toDateString()?'today':'')},d);b.onclick=()=>{ivDay=ivDay===k?null:k;render()};cg.append(b)}
+  const nv=n=>{const b=h('button',{class:'ib',type:'button','aria-label':n<0?'Previous month':'Next month',style:'font-size:1.3rem'},n<0?'\u2039':'\u203a');b.onclick=()=>{calD.setMonth(calD.getMonth()+n);render()};return b};
+  const cb=h('div',{class:'box'},h('div',{class:'row',style:'margin-bottom:10px'},nv(-1),h('b',{},calD.toLocaleString('en-IN',{month:'long',year:'numeric'})),nv(1)),cg,ivDay?h('div',{class:'mut',style:'margin-top:10px'},'Showing '+ivDay+'. Select the day again to clear.'):null);
+  const tabs=h('div',{class:'tb'},[['up','Upcoming'],['done','Completed'],['all','All']].map(([k,l])=>{const b=h('button',{class:'btn'+(!ivDay&&ivF===k?'':' alt'),type:'button'},l);b.onclick=()=>{ivF=k;ivDay=null;render()};return b}));
+  const row=i=>{const c=S.c.find(x=>x.id===i.cid),b=[mini('Questions',()=>kit(i.cid,i.id)),mini(i.fb?'View feedback':'Feedback',()=>kit(i.cid,i.id,1))];
+    if(i.status==='Scheduled')b.push(mini('Reschedule',()=>schedule(i.cid,i)),mini('Cancel',()=>{i.status='Cancelled';save();toast('Interview cancelled');render()}));
+    const r=h('tr',{class:'cl'},h('td',{},dt(i.at)),h('td',{},c?h('div',{class:'nm'},av(c,28),c.name):'(removed)'),h('td',{},jname(i.jid)),h('td',{},i.mode),h('td',{},i.who),h('td',{},h('span',{class:'pill',style:'--c:'+{Scheduled:'#2f6bd8',Completed:'#16a34a',Cancelled:'#6b7280'}[i.status]},i.status+(i.fb?' ('+i.fb.rec+')':''))),h('td',{},b));r.onclick=()=>open(i.cid);return r};
+  const sb=h('button',{class:'btn',type:'button'},'+ Schedule interview');sb.onclick=()=>schedule();
+  const tb=h('div',{class:'tw'},h('table',{class:'tbl'},h('thead',{},h('tr',{},['When','Candidate','Position','Type','Interviewer','Status','Actions'].map(x=>h('th',{},x)))),h('tbody',{},L.length?L.map(row):[h('tr',{},h('td',{colspan:'7',style:'text-align:center;color:var(--mut);padding:30px'},'No interviews to show.'))])));
+  return h('div',{},head('Interviews','Schedule interviews, prepare questions and record feedback.',sb),h('div',{class:'jl'},cb,h('div',{},tabs,tb)))}
+/* job postings */
+function posts(){const nb=h('button',{class:'btn',type:'button'},'+ New job posting');nb.onclick=()=>jobForm();
+  const rows=S.j.map(j=>{const n=S.c.filter(c=>c.stage!=='Rejected'&&match(c,j).score>=60).length,r=h('tr',{class:'cl'},h('td',{},h('b',{},j.title),h('div',{class:'mut'},j.skills.join(', '))),h('td',{},j.dept),h('td',{},j.loc+', '+j.type),h('td',{},j.exp+'+ yr'),h('td',{},n),h('td',{},dd(j.posted)),
+    h('td',{},h('span',{class:'pill',style:'--c:'+({Open:'#16a34a',Draft:'#f59e0b',Closed:'#6b7280'}[j.status]||'#6b7280')},j.status)),
+    h('td',{},mini('Edit',()=>jobForm(j)),mini(j.status==='Open'?'Close':'Reopen',()=>{j.status=j.status==='Open'?'Closed':'Open';save();render()}),mini('Delete',()=>{if(confirm('Delete the job posting "'+j.title+'"?')){S.j=S.j.filter(x=>x!==j);S.iv=S.iv.filter(i=>i.jid!==j.id);save();render()}},';color:var(--bad);border-color:var(--bad)')));r.onclick=()=>{selJob=j.id;rank=null;go('jobs')};return r});
+  return h('div',{},head('Job postings','Create, edit, close and delete positions. Select a row to match candidates.',nb),h('div',{class:'tw'},h('table',{class:'tbl'},h('thead',{},h('tr',{},['Position','Department','Location and type','Experience','Matching candidates','Posted','Status','Actions'].map(x=>h('th',{},x)))),h('tbody',{},rows.length?rows:[h('tr',{},h('td',{colspan:'8',style:'text-align:center;color:var(--mut);padding:30px'},'No job postings yet.'))]))))}
+function jobForm(j){const e=j||{},o=(a,v)=>a.map(x=>h('option',{value:x},x)),T=h('input',{class:'in',value:e.title||'',placeholder:'Data Scientist'}),Dp=h('input',{class:'in',value:e.dept||'',placeholder:'Engineering'}),L=h('input',{class:'in',value:e.loc||'',placeholder:'Coimbatore or Remote'}),
+  Ty=h('select',{class:'in'},o(['Full-time','Part-time','Internship','Contract'])),St=h('select',{class:'in'},o(['Open','Draft','Closed'])),Sk=h('input',{class:'in',value:(e.skills||[]).join(', '),placeholder:'Python, SQL, Docker'}),
+  Ex=h('input',{class:'in',type:'number',min:'0',value:e.exp==null?1:e.exp}),Cm=h('input',{class:'in',type:'number',min:'0',max:'100',value:e.comm==null?60:e.comm}),De=h('textarea',{class:'in',rows:'4',placeholder:'Role summary and responsibilities'});
+  Ty.value=e.type||'Full-time';St.value=e.status||'Open';De.value=e.desc||'';
+  const sv=h('button',{class:'btn',type:'button'},j?'Save changes':'Publish posting');
+  sv.onclick=()=>{const sk=Sk.value.split(',').map(x=>x.trim()).filter(Boolean);if(!T.value.trim()||!sk.length)return toast('Enter a job title and at least one skill');
+    const v={title:T.value.trim(),dept:Dp.value.trim()||'General',loc:L.value.trim()||'Remote',type:Ty.value,skills:sk,exp:+Ex.value||0,comm:+Cm.value||0,status:St.value,desc:De.value.trim()};
+    if(j)Object.assign(j,v);else S.j.push(Object.assign(jb(v.title,v.skills.join(','),v.exp,v.comm),v));save();close();toast(j?'Job posting updated':'Job posting created');go('posts')};
+  modal(j?'Edit job posting':'New job posting',h('div',{class:'fm'},fld('Job title',T),h('div',{class:'two'},fld('Department',Dp),fld('Location',L)),h('div',{class:'two'},fld('Employment type',Ty),fld('Status',St)),fld('Required skills (comma separated)',Sk),h('div',{class:'two'},fld('Minimum experience (years)',Ex),fld('Minimum communication score',Cm)),fld('Description',De)),h('div',{style:'margin-top:14px'},sv))}
+/* reports */
+function reps(){const c=S.c,N=c.length||1,ix=s=>ST.indexOf(s),reach=s=>c.filter(x=>x.stage!=='Rejected'&&ix(x.stage)>=ix(s)).length,done=S.iv.filter(i=>i.status==='Completed'),sc=done.filter(i=>i.fb),
+  avg=sc.length?(sc.reduce((a,i)=>a+i.fb.r.reduce((x,y)=>x+y,0)/i.fb.r.length,0)/sc.length).toFixed(1):'-',hired=c.filter(x=>x.stage==='Hired').length,rej=c.filter(x=>x.stage==='Rejected').length;
+  const K=(i,col,a,l)=>h('div',{class:'k',style:'--c:'+col+';cursor:default'},h('span',{class:'ic'},ic(i)),h('div',{},h('b',{},a),h('span',{},l)));
+  const kp=h('div',{class:'kp'},K('cands','#2f6bd8',c.length,'Total applicants'),K('chk','#16a34a',Math.round(hired/N*100)+'%','Hire rate'),K('cal','#f59e0b',done.length+' of '+S.iv.length,'Interviews completed'),K('rep','#8b5cf6',avg==='-'?'-':avg+' / 5','Average interview rating'));
+  const fn=h('div',{class:'box'},h('h3',{},'Hiring funnel (candidates who reached each stage)'),ST.slice(0,5).map(s=>h('div',{class:'br2',style:'grid-template-columns:90px 1fr 80px'},h('span',{},s),h('div',{class:'tr',style:'--c:'+SC[s]},h('i',{style:'width:'+reach(s)/N*100+'%'})),h('b',{style:'font-size:.85rem'},reach(s)+' ('+Math.round(reach(s)/N*100)+'%)'))),h('div',{class:'mut',style:'margin-top:8px'},rej+' rejected'));
+  const rc={};sc.forEach(i=>rc[i.fb.rec]=(rc[i.fb.rec]||0)+1);
+  const rb=h('div',{class:'box'},h('h3',{},'Interview recommendations'),Object.keys(rc).length?Object.entries(rc).map(([k,v])=>h('div',{class:'br2'},h('span',{},k),h('div',{class:'tr'},h('i',{style:'width:'+v/sc.length*100+'%'})),h('b',{},v))):h('div',{class:'mut'},'No interview feedback recorded yet.'));
+  const jt=h('div',{class:'box'},h('h3',{},'Performance by job posting'),h('table',{class:'tbl'},h('thead',{},h('tr',{},['Position','Status','Strong matches (60%+)','Interviews','Offers and hires'].map(x=>h('th',{},x)))),h('tbody',{},S.j.map(j=>{const ids=new Set(S.iv.filter(i=>i.jid===j.id).map(i=>i.cid));
+    return h('tr',{},h('td',{},h('b',{},j.title)),h('td',{},j.status),h('td',{},c.filter(x=>x.stage!=='Rejected'&&match(x,j).score>=60).length),h('td',{},S.iv.filter(i=>i.jid===j.id).length),h('td',{},c.filter(x=>ids.has(x.id)&&(x.stage==='Offer'||x.stage==='Hired')).length))}))));
+  const csv=(name,rows)=>{const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"',a=h('a',{href:URL.createObjectURL(new Blob([rows.map(r=>r.map(q).join(',')).join('\r\n')],{type:'text/csv'})),download:name});document.body.append(a);a.click();a.remove();toast('Downloaded '+name)};
+  const e1=h('button',{class:'btn alt',type:'button'},'Export candidates (CSV)'),e2=h('button',{class:'btn alt',type:'button'},'Export interviews (CSV)'),pr=h('button',{class:'btn',type:'button'},'Print report');
+  e1.onclick=()=>csv('candidates.csv',[['Name','Email','Phone','Stage','Experience (yr)','Coding','Communication','Skills']].concat(c.map(x=>[x.name,x.email,x.phone,x.stage,x.experience,x.coding,x.communication,x.skills.join('; ')])));
+  e2.onclick=()=>csv('interviews.csv',[['Date','Candidate','Position','Type','Interviewer','Status','Recommendation']].concat(S.iv.map(i=>[dt(i.at),cname(i.cid),jname(i.jid),i.mode,i.who,i.status,i.fb?i.fb.rec:''])));pr.onclick=()=>window.print();
+  return h('div',{},head('Reports','Hiring performance, interview results and data exports.',e1,e2,pr),kp,h('div',{class:'g2'},fn,rb),jt)}
+/* hiring workflow */
+function wfv(){const A=S.auto,ab=h('div',{class:'box'},h('h3',{},'Automation rules'),[['sched','Move a candidate to Interview when an interview is scheduled'],['hire','Move a candidate to Offer after a Hire or Strong hire recommendation'],['nohire','Mark a candidate as Rejected after a No hire recommendation']].map(([k,l])=>{const cb=h('input',{type:'checkbox'});cb.checked=!!A[k];cb.onchange=()=>{A[k]=cb.checked;save();toast('Rule turned '+(cb.checked?'on':'off'))};return h('label',{style:'display:flex;gap:10px;align-items:center;margin:8px 0'},cb,l)}));
+  const col=s=>{const box=h('div',{class:'box'},h('h3',{style:'color:'+SC[s]},s+' stage tasks')),ul=h('div'),draw=()=>ul.replaceChildren(...(S.wf[s]||[]).map((t,i)=>{const x=h('button',{class:'x',type:'button','aria-label':'Remove task',style:'font-size:1.1rem'},'\u00d7');x.onclick=()=>{S.wf[s].splice(i,1);save();draw()};return h('div',{class:'row',style:'padding:4px 0;border-bottom:1px solid #eef0f3'},t,x)}));draw();
+    const inp=h('input',{class:'in',placeholder:'Add a task and press Enter',style:'width:100%;margin-top:8px'});inp.onkeydown=e=>{if(e.key==='Enter'&&inp.value.trim()){(S.wf[s]=S.wf[s]||[]).push(inp.value.trim());inp.value='';save();draw()}};box.append(ul,inp);return box};
+  return h('div',{},head('Hiring workflow','Set the tasks for each stage and the rules that move candidates automatically.'),ab,h('div',{class:'g2',style:'margin-top:16px'},ST.map(col)))}
+/* dashboard extras */
+function upBox(){const up=S.iv.filter(i=>i.status==='Scheduled').sort((a,b)=>a.at-b.at).slice(0,5);
+  return h('div',{class:'box'},h('h3',{},'Upcoming interviews'),up.length?h('table',{class:'tbl'},h('thead',{},h('tr',{},['When','Candidate','Position'].map(x=>h('th',{},x)))),h('tbody',{},up.map(i=>{const r=h('tr',{class:'cl'},h('td',{},dt(i.at)),h('td',{},cname(i.cid)),h('td',{},jname(i.jid)));r.onclick=()=>go('iv');return r}))):h('div',{class:'mut'},'No interviews scheduled.'))}
+function qaBox(){const b=(l,f,a)=>{const e=h('button',{class:'btn'+(a?' alt':''),type:'button'},l);e.onclick=f;return e};
+  return h('div',{class:'box'},h('h3',{},'Quick actions'),h('div',{class:'row',style:'justify-content:flex-start;flex-wrap:wrap'},b('Schedule interview',()=>schedule()),b('New job posting',()=>jobForm(),1),b('View reports',()=>go('rep'),1),b('Hiring workflow',()=>go('wf'),1)))}
+async function syncSrv(b){b.disabled=true;try{const d=await call('/candidates'),l=findList(d)||(Array.isArray(d)?d:[]);let n=0;
+  l.forEach(c0=>{if(!c0||(!c0.name&&!c0.email))return;const m=String(c0.email||'').toLowerCase();if(m&&S.c.some(x=>(x.email||'').toLowerCase()===m))return;S.c.push(norm(c0));n++});
+  save();toast(n?n+' resume'+(n>1?'s':'')+' imported from the server':'No new resumes found on the server');render()}
+ catch(e){toast(/not found|404/i.test(e.message)?'Add the /candidates route to main.py first (see the instructions)':e.message)}b.disabled=false}
+/* shell */
+const V={dash,cands,pipe,posts,jobs,iv:ivs,rep:reps,wf:wfv,add};let view='dash';
+const TT={dash:'Dashboard',cands:'Candidates',pipe:'Hiring Pipeline',jobs:'Match Candidates',posts:'Job Postings',iv:'Interviews',rep:'Reports',wf:'Hiring Workflow',add:'Upload Resume'};
+function render(){$('main').replaceChildren(V[view]());$('crumb').replaceChildren('Home  /  ',h('b',{},TT[view]));document.querySelectorAll('#nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.v===view?'page':'false'))}
+function go(v){view=v;close();render();scrollTo(0,0)}
+$('nav').replaceChildren(h('small',{},'Menu'),...[['dash','Dashboard','dash'],['cands','Candidates','cands'],['pipe','Hiring Pipeline','pipe'],['posts','Job Postings','posts'],['jobs','Match Candidates','srch'],['iv','Interviews','cal'],['rep','Reports','rep'],['wf','Hiring Workflow','wf'],['add','Upload Resume','add']].map(([v,l,i])=>{const b=h('button',{type:'button','data-v':v},ic(i),l);b.onclick=()=>go(v);return b}));
+$('si').replaceWith(ic('srch'));$('bi').replaceWith(ic('bell'));$('bell').onclick=()=>toast('No new notifications');
+$('gs').onkeydown=e=>{if(e.key==='Enter'){F.q=e.target.value;F.st='';F.skill='';go('cands')}};
+$('reset').onclick=()=>{if(confirm('Clear all candidates, job postings and interviews from this browser? Resumes saved on the server are not deleted.')){try{localStorage.removeItem('talentdesk')}catch{}location.reload()}};
+render();
+</script></body></html>

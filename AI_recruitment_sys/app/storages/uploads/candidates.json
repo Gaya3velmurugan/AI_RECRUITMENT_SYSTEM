@@ -1,0 +1,52 @@
+[
+    {
+        "name": "Selvakumar M",
+        "email": "selvakumarmanickam2003@gmail.com",
+        "phone": "9344810456",
+        "skills": [
+            "Java",
+            "SQL",
+            "HTML",
+            "CSS",
+            "Decision-Making",
+            "Adaptability",
+            "Team Building",
+            "Problem-Solving"
+        ],
+        "experience": 0,
+        "projects": [
+            {
+                "title": "Online Food Delivery Website",
+                "description": "Developed an online food delivery website that connects users with nearby restaurants for easy ordering and delivery."
+            },
+            {
+                "title": "Deep Transfer Learning-Based System",
+                "description": "Developed a deep transfer learning-based system using the ConvNeXt model for classifying acute lymphocytic leukemia subtypes."
+            }
+        ],
+        "communication": 0,
+        "coding": 0,
+        "problem_solving": 30,
+        "leadership": 20
+    },
+    {
+        "name": "ERAIANBU M",
+        "email": "anbuerai216@gmail.com",
+        "phone": "+91 9345184164",
+        "skills": [
+            "SQL",
+            "Snowflake",
+            "Java"
+        ],
+        "experience": 0,
+        "projects": [
+            {
+                "title": "Banking Loan Analytics Data Warehouse using Snowflake"
+            }
+        ],
+        "communication": 0,
+        "coding": 0,
+        "problem_solving": 0,
+        "leadership": 0
+    }
+]
